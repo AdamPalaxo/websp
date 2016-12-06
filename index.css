@@ -1,0 +1,10 @@
+body {
+    background-image: url("images/back.jpg");
+}
+
+.vertical-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+   
+}
