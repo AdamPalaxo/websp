@@ -14,3 +14,23 @@ li
     margin-right: auto;
     margin-left: auto;
 }
+
+.navbar-default
+{
+    font-size: 14px;
+    background-color: rgba(136, 197, 209, 1);
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+
+.navbar-default .navbar-nav>li>a:focus 
+{
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(137, 202, 217, 1);
+}
+
+.navbar-nav>.active>a:focus {
+    color: rgba(85, 85, 85, 1);
+    background-color: rgba(137, 202, 217, 1);
+}
