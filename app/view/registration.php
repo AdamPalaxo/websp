@@ -1,11 +1,17 @@
- <!DOCTYPE html>
+<?php
+    $error='';
+
+    if(!isset($_SESSION['username'])) include 'newuser.php';
+    else exit(header('Location: menu.php') );
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" href="css/index.css">
+     <!-- <link rel="stylesheet" href="css/index.css"> -->
     <meta charset="UTF-8">
     <title>Registrace</title>
 </head>
@@ -23,10 +29,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="pass">Email:</label>
+                <label for="email">Email:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input type="email" class="form-control" name="pass" placeholder="@">
+                    <input type="email" class="form-control" name="email" placeholder="@">
                 </div>
             </div>
             <div class="form-group">
@@ -37,10 +43,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="pass">Potvrzení hesla:</label>
+                <label for="confirmpass">Potvrzení hesla:</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input type="password" class="form-control" name="pass" placeholder="Heslo">
+                    <input type="password" class="form-control" name="confirmpass" placeholder="Heslo">
                 </div>
             </div>    
         <button class="btn btn-info" type="submit" name="submit">Registrovat</button>
