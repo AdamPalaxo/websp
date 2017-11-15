@@ -1,0 +1,28 @@
+body
+{
+    background: url(../images/test.png);
+    /* background-color: white; */
+    background-position: center;
+    background-size: auto;
+}
+
+
+
+.vertical-center 
+{
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+   
+}
+
+.panel-body
+{
+    background: #f5f5f5;
+}
+
+.panel-info
+{
+    border: 1px solid #e3e3e3;
+}
