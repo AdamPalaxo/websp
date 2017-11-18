@@ -6,17 +6,9 @@
  * Time: 23:58
  */
 
-define('__ROOT__', dirname(dirname(__FILE__)));
-require_once(__ROOT__.'/model/db_web.php');
+require "../controller/BaseController.php";
 
-require_once (__ROOT__.'/../twig/Autoloader.php');
-Twig_Autoloader::register();
-
-
-$conn = new LoginController();
-
-
-class LoginController
+class LoginController extends BaseController
 {
     public $db_web;
 
@@ -41,6 +33,9 @@ class LoginController
     }
 
 
-
+    function process($parameters)
+    {
+        // TODO: Implement process() method.
+    }
 }
 
