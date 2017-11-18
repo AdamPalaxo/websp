@@ -14,12 +14,23 @@ class RouterController extends BaseController
     {
         $parsedURL = $this->parseURL($parameters[0]);
 
-        if(empty($parsedURL[0]))
-            $this->redirect('page/intro');
+        if (empty($parsedURL[0]))
+            $this->redirect('index');
 
         $controllerClass = $this->makeReadableURL(array_shift($parsedURL)) . 'Controller';
 
-        echo $controllerClass;
+        if (file_exists('controller/' . $controllerClass. '.php'))
+            $this->controller = new $controllerClass;
+        else
+            $this->redirect("error");
+
+        $this->controller->process($parsedURL);
+
+        $this->data['title'] = $this->controller->heading['title'];
+        $this->data['key_words'] = $this->controller->heading['key_words'];
+        $this->data['description'] = $this->controller->heading['description'];
+
+        $this->view = 'intro';
     }
 
     private function parseURL($url)

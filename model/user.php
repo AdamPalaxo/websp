@@ -6,7 +6,7 @@
  * Time: 23:32
  */
 
-class User extends DB_WEB
+class User
 {
     private $username;
     private $password;

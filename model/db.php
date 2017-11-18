@@ -17,56 +17,46 @@ class DB
         $this->pass = $pass;
     }
 
-
     protected function connect()
     {
         $this->conn = new PDO('mysql:host='.$this->dbhost.';dbname='.$this->dbname.';charset=utf8', $this->user, $this->pass);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->conn->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8");
 
         echo "Připojení úspěšné! <br>";
     }
 
-    protected function executeQuery()
+    public function getOneRow($query, $parameters = array())
     {
-        $stmt = $this->conn->query('SELECT * FROM user');
+        $return_value = self::$conn->prepare($query);
+        $return_value->execute($parameters);
 
-        while ($row = $stmt->fetch())
-        {
-            echo $row['username'] . "<br>";
-        }
-
+        return $return_value->fetch();
     }
 
-    protected function findUser($username, $password)
+    public function getAllRows($query, $parameters = array())
     {
-        $stmt = $this->conn->prepare("SELECT * FROM user WHERE username=:username");
+        $return_value = self::$conn->prepare($query);
+        $return_value->execute($parameters);
 
-        $stmt->bindParam(":username", $username);
-
-        $stmt->execute();
-
-        if($stmt->rowCount($stmt) == 1)
-        {
-            $result = $stmt->fetchcolumn(2);
-
-            if(password_verify($password, $result));
-            {
-                return 1;
-            }
-        }
-        else
-        {
-            echo "Uživatel neexistuje\n";
-            return 0;
-        }
-
+        return $return_value->fetchAll();
     }
 
+    public function getColumn($query, $parameters = array())
+    {
+        $result = self::getOneRow($query, $parameters);
+
+        return $result[0];
+    }
+
+    public function get($query, $parameters = array())
+    {
+        $return_value = self::$conn->prepare($query);
+        $return_value->execute($parameters);
+
+        return $return_value->rowCount();
+    }
 
 }
 
-
-
-
-?>
