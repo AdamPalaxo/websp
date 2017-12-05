@@ -26,4 +26,35 @@ abstract class BaseController
         header("Connection: close");
         exit;
     }
+
+    // Adds new message for user
+    public function addMessage($message)
+    {
+        if(isset($_SESSION['messages']))
+        {
+            $_SESSION['messages'][] = $message;
+        }
+        else
+        {
+            $_SESSION['messages'] = array($message);
+        }
+    }
+
+    // Returns messages for user
+    public function returnMessages()
+    {
+        if(isset($_SESSION['messages']))
+        {
+            $messages = $_SESSION['messages'];
+            unset($_SESSION['messages']);
+            return $messages;
+        }
+        else
+        {
+            return array();
+        }
+    }
+
+
+
 }

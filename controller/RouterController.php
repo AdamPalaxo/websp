@@ -29,6 +29,7 @@ class RouterController extends BaseController
         $this->data['title'] = $this->controller->heading['title'];
         $this->data['key_words'] = $this->controller->heading['key_words'];
         $this->data['description'] = $this->controller->heading['description'];
+        $this->data['messages'] = $this->returnMessages();
 
         $this->view = 'index';
     }

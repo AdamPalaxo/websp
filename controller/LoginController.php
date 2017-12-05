@@ -2,16 +2,29 @@
 
 class LoginController extends BaseController
 {
-    public $db_web;
-
-    public function __construct()
-    {
-        $this->db_web= new DB_WEB();
-    }
 
     function process($parameters)
     {
-        // TODO: Implement process() method.
+        $userManager = new UserManager();
+
+        $this->heading['title'] = "Přihlášení";
+
+        if($_POST)
+        {
+            try
+            {
+                $userManager->login($_POST['username'], $_POST['password']);
+                $this->addMessage("Uživatel úspěšně přihlášen");
+                $this->redirect("page/intro");
+
+            }
+            catch (UserException $ex)
+            {
+                $this->addMessage($ex->getMessage());
+            }
+        }
+
+        $this->view = "login";
     }
 }
 

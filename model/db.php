@@ -1,56 +1,53 @@
 <?php
 
-class DB
+class Db
 {
-    protected $dbhost;
-    protected $dbname;
-    protected $user;
-    protected $pass;
+    /** @var PDO */
+    private static $conn; // Database object
 
-    protected $conn;
+    private static $settings = array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+    );
 
-    protected function __construct($dbhost, $dbname, $user, $pass)
+    public static function connect($host, $dbname, $user, $password)
     {
-        $this->dbhost = $dbhost;
-        $this->dbname = $dbname;
-        $this->user = $user;
-        $this->pass = $pass;
+        if(!isset(self::$conn))
+        {
+            self::$conn = @new PDO(
+                "mysql:host=$host;dbname=$dbname",
+                $user,
+                $password,
+                self::$settings
+            );
+        }
     }
 
-    protected function connect()
-    {
-        $this->conn = new PDO('mysql:host='.$this->dbhost.';dbname='.$this->dbname.';charset=utf8', $this->user, $this->pass);
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        $this->conn->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8");
-
-        echo "Připojení úspěšné! <br>";
-    }
-
-    public function getOneRow($query, $parameters = array())
+    public static function queryOne($query, $parameters = array())
     {
         $return_value = self::$conn->prepare($query);
         $return_value->execute($parameters);
 
-        return $return_value->fetch();
+        return $return_value->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getAllRows($query, $parameters = array())
+    public static function queryAll($query, $parameters = array())
     {
         $return_value = self::$conn->prepare($query);
         $return_value->execute($parameters);
 
-        return $return_value->fetchAll();
+        return $return_value->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getColumn($query, $parameters = array())
+    public static function queryColumn($query, $parameters = array())
     {
-        $result = self::getOneRow($query, $parameters);
+        $result = self::queryOne($query, $parameters);
 
         return $result[0];
     }
 
-    public function get($query, $parameters = array())
+    public static function query($query, $parameters = array())
     {
         $return_value = self::$conn->prepare($query);
         $return_value->execute($parameters);
@@ -58,5 +55,12 @@ class DB
         return $return_value->rowCount();
     }
 
+    public static function insert($table, $parameters = array())
+    {
+        return self::query("INSERT INTO `$table` ('".
+            implode('`, `', array_keys($parameters)).
+            "`) VALUES (".str_repeat('?.', sizeof($parameters) - 1)."?)",
+            array_values($parameters));
+    }
 }
 

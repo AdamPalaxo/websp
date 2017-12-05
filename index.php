@@ -1,14 +1,23 @@
 <?php
 
-require_once 'twig/Autoloader.php';
-Twig_Autoloader::register();
+session_start();
 
-$loader = new Twig_Loader_Filesystem('application/view/templates');
-$twig = new Twig_Environment($loader, array(
-    'cache' => 'application/view/compilation_cache',
-));
+mb_internal_encoding("UTF-8");
 
-echo $twig->render('index.html', array());
+function autoload($class)
+{
+    if (preg_match('/Controller$/', $class))
+        require("controller/" . $class . ".php");
+    else
+        require("model/" . $class . ".php");
+}
 
+spl_autoload_register("autoload");
 
-?>
+Db::connect("127.0.0.1", "kivweb", "root", "");
+
+$router = new RouterController();
+$router->process(array($_SERVER['REQUEST_URI']));
+
+$router->showView();
+
