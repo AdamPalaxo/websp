@@ -1,0 +1,53 @@
+<div class="container vertical-center">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">Přidání nového článku</div>
+            <div class="panel-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="title" class="cols-sm-2 control-label">Název příspěvku: </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Jméno souboru" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="author" class="cols-sm-2 control-label">Autoři: </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="text" class="form-control" name="author" id="author" placeholder="Autoři" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="cols-sm-2 control-label">Abstrakt: </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <textarea class="form-control" rows="5" name="description" id="description"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="attachment" class="cols-sm-2 control-label">Soubor: </label>
+                        <input type="file" class="filestyle" data-icon="false" name="attachment" id="attachment" required>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit" name="submit">Uložit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#attachment').filestyle({
+        buttonText : ' Procházet...',
+        iconName : 'glyphicon glyphicon-file',
+        buttonName : 'btn-warning'
+    });
+</script>

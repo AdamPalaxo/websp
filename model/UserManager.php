@@ -10,7 +10,7 @@ class UserManager
 {
     public function encryptPassword($password)
     {
-        password_hash($password, PASSWORD_BCRYPT);
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
     // Registers new user
@@ -23,15 +23,19 @@ class UserManager
 
         $user = array(
             'username' => $username,
-            'password' => $password,
+            'password' => $this->encryptPassword($password),
+            'active' => 1,
+            'role' => "publisher"
         );
 
         try
         {
-
+            Db::insert('user', $user);
         }
         catch(PDOException $exception)
         {
+            echo $exception->getMessage();
+
             throw new UserException('Uživatel s tímto jménem je již registrovaný.');
         }
     }
@@ -43,14 +47,8 @@ class UserManager
         $user = Db::queryOne('SELECT username, password, active, role
                                     FROM user WHERE username = ?',
                                     array($username));
-        if($user)
-        {
-            if(!password_verify($password, $user['password']))
-            {
-                throw new UserException('Neplatné uživatelské jméno nebo heslo');
-            }
-        }
-        else
+
+        if(!$user || !password_verify($password, $user['password']))
         {
             throw new UserException('Neplatné uživatelské jméno nebo heslo');
         }
@@ -62,5 +60,14 @@ class UserManager
     public function logout()
     {
         unset($_SESSION['user']);
+    }
+
+    public function returnUser()
+    {
+        if(isset($_SESSION['user']))
+        {
+            return $_SESSION['user'];
+        }
+        return null;
     }
 }

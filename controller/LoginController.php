@@ -7,6 +7,11 @@ class LoginController extends BaseController
     {
         $userManager = new UserManager();
 
+        if($userManager->returnUser())
+        {
+            $this->redirect("admin");
+        }
+
         $this->heading['title'] = "Přihlášení";
 
         if($_POST)
@@ -15,7 +20,7 @@ class LoginController extends BaseController
             {
                 $userManager->login($_POST['username'], $_POST['password']);
                 $this->addMessage("Uživatel úspěšně přihlášen");
-                $this->redirect("page/intro");
+                $this->redirect("admin");
 
             }
             catch (UserException $ex)

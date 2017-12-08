@@ -57,9 +57,9 @@ class Db
 
     public static function insert($table, $parameters = array())
     {
-        return self::query("INSERT INTO `$table` ('".
+        return self::query("INSERT INTO `$table` (`".
             implode('`, `', array_keys($parameters)).
-            "`) VALUES (".str_repeat('?.', sizeof($parameters) - 1)."?)",
+            "`) VALUES (" . str_repeat('?,', count($parameters) - 1)."?)",
             array_values($parameters));
     }
 }

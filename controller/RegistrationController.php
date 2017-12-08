@@ -11,6 +11,25 @@ class RegistrationController extends BaseController
 
     function process($parameters)
     {
-        // TODO: Implement process() method.
+        $this->heading['title'] = "Registrace";
+
+        if($_POST)
+        {
+            try
+            {
+                $userManager = new UserManager();
+                $userManager->register($_POST['username'], $_POST['password'],  $_POST['passwordagain']);
+                $userManager->login($_POST['username'], $_POST['password']);
+                $this->addMessage("Byl jste úspěšně registrován.");
+                $this->redirect("page/intro");
+
+            }
+            catch (UserException $ex)
+            {
+                $this->addMessage($ex->getMessage());
+            }
+        }
+
+        $this->view = "register";
     }
 }
