@@ -1,53 +1,118 @@
-<div class="container vertical-center">
-    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-        <div class="panel panel-success">
-            <div class="panel-heading">Přidání nového článku</div>
-            <div class="panel-body">
-                <form method="POST">
-                    <div class="form-group">
-                        <label for="title" class="cols-sm-2 control-label">Název příspěvku: </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Jméno souboru" required/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="author" class="cols-sm-2 control-label">Autoři: </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="text" class="form-control" name="author" id="author" placeholder="Autoři" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description" class="cols-sm-2 control-label">Abstrakt: </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <textarea class="form-control" rows="5" name="description" id="description"></textarea>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="attachment" class="cols-sm-2 control-label">Soubor: </label>
-                        <input type="file" class="filestyle" data-icon="false" name="attachment" id="attachment" required>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-success" type="submit" name="submit">Uložit</button>
-                    </div>
-
-                </form>
+<div class="container">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="text-center">
+                <h1>Seznam příspěvků</h1>
             </div>
         </div>
     </div>
 </div>
 
+
+<!-- Table with articles -->
+<section id="table">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hoover">
+                <tr class="active">
+                    <th class="text-center">Název<br></th>
+                    <th class="text-center">Autoři<br></th>
+                    <th class="text-center">Stav<br></th>
+                    <th class="text-center">Vymazat</th>
+                </tr>
+                <tbody>
+                <?php foreach ($articles as $article) : ?>
+                <tr>
+                    <td class="col-md-4"><a href="index.php?article=edit&id=<?= $article['id'] ?>" class="btn btn-info"><?= $article['title'] ?></a></td>
+                    <td class="col-md-4"><?= $article['creators'] ?></td>
+                    <td class="col-md-4">
+                        <?php if ($article['approved'] == '0') : ?>
+                            <b>V recenzním řízení</b>
+                        <?php elseif ($article['approved'] == '1') : ?>
+                            <b>Schváleno</b>
+                        <?php elseif ($article['approved'] == '2') : ?>
+                            <b>Neschváleno</b>
+                         <?php endif ?>
+                    </td>
+                    <td class="col-md-4"><span><a class="remove" href="index.php?paper=delete&id=<?= $article['id'] ?>"><span class="glyphicon glyphicon-remove"></span></a></span></td>
+                </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+        <div class="form-group">
+            <div class="text-center">
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#addArticle">Přidat článek</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal for add a new article -->
+<div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" id="paperForm" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Přidání nového článku</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Název příspěvku: </label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Název příspěvku" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="creators">Autoři: </label>
+                        <input type="text" class="form-control" name="creators" id="creators" placeholder="Autoři" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Soubor: </label>
+                        <input type="file" class="filestyle" data-icon="false" name="file" id="file" accept="application/pdf" required>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="10000" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Abstrakt: </label>
+                        <textarea class="form-control" rows="10" name="description" id="description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                    <button type="button" class="btn btn-primary" id="submitForm">Uložit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+
 <script>
-    $('#attachment').filestyle({
+    $('#file').filestyle({
         buttonText : ' Procházet...',
         iconName : 'glyphicon glyphicon-file',
         buttonName : 'btn-warning'
+    });
+</script>
+
+<script>
+    CKEDITOR.replace( 'description' );
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#submitForm").on('click', function() {
+            $("#paperForm").submit();
+        });
     });
 </script>

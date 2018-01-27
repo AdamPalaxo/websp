@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="text-center">
+        <h1></h1>
+    </div>
+
+    <div class="text-center">
+        <h3>Název příspěvku: <strong><?= $review['title'] ?></strong></h3>
+    </div>
+
+    <div class="text-center">
+        <h3><a href="index.php?review=download&id=<?= $review['article_id'] ?>">Stáhnout příspěvek</a></h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading main-color-bg">
+                    <h3 class="panel-title">Editace posudku</h3>
+                </div>
+
+                <div class="panel-body">
+        <form method="POST">
+            <input type="hidden" name="id" value="<?= $review['id'] ?>" />
+
+            <div class="form-group">
+                <label for="selOriginality">Originalita:</label>
+                <select class="form-control" name="rating_originality" id="selOriginality">
+                    <option value="1" <?php if ($review['rating_originality'] == '1') echo 'selected'; ?>>1 = bez originálních myšlenek</option>
+                    <option value="2" <?php if ($review['rating_originality'] == '2') echo 'selected'; ?>>2 = velmi málo originálních myšlenek</option>
+                    <option value="3" <?php if ($review['rating_originality'] == '3') echo 'selected'; ?>>3 = několik originálních myšlenek</option>
+                    <option value="4" <?php if ($review['rating_originality'] == '4') echo 'selected'; ?>>4 = origninální myšlenky</option>
+                    <option value="5" <?php if ($review['rating_originality'] == '5') echo 'selected'; ?>>5 = originální i interesantní myšlenky</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="selTopic">Téma:</label>
+                <select class="form-control"name="rating_theme" id="selTopic">
+                    <option value="1" <?php if ($review['rating_theme'] == '1') echo 'selected'; ?>>1 = zcela jiné téma</option>
+                    <option value="2" <?php if ($review['rating_theme'] == '2') echo 'selected'; ?>>2 = nedodržení tématu</option>
+                    <option value="3" <?php if ($review['rating_theme'] == '3') echo 'selected'; ?>>3 = poměrně relevantní</option>
+                    <option value="4" <?php if ($review['rating_theme'] == '4') echo 'selected'; ?>>4 = relevatní</option>
+                    <option value="5" <?php if ($review['rating_theme'] == '4') echo 'selected'; ?>>5 = zcela relevantí</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="selTechQuality">Technické zpracování:</label>
+                <select class="form-control" name="rating_language" id="selTechQuality">
+                    <option value="1" <?php if ($review['rating_language'] == '1') echo 'selected'; ?>>1 = mizerné</option>
+                    <option value="2" <?php if ($review['rating_language'] == '2') echo 'selected'; ?>>2 = podprůměrné</option>
+                    <option value="3" <?php if ($review['rating_language'] == '3') echo 'selected'; ?>>3 = dobré</option>
+                    <option value="4" <?php if ($review['rating_language'] == '4') echo 'selected'; ?>>4 = velmi dobré</option>
+                    <option value="5" <?php if ($review['rating_language'] == '5') echo 'selected'; ?>>5 = perfektní</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="selLanguage">Jazyková kvalita:</label>
+                <select class="form-control" name="rating_awesomeness" id="selLanguage">
+                    <option value="1" <?php if ($review['rating_awesomeness'] == '1') echo 'selected'; ?>>1 = mizerná</option>
+                    <option value="2" <?php if ($review['rating_awesomeness'] == '2') echo 'selected'; ?>>2 = podprůměrná</option>
+                    <option value="3" <?php if ($review['rating_awesomeness'] == '3') echo 'selected'; ?>>3 = dobrá</option>
+                    <option value="4" <?php if ($review['rating_awesomeness'] == '4') echo 'selected'; ?>>4 = velmi dobrá</option>
+                    <option value="5" <?php if ($review['rating_awesomeness'] == '5') echo 'selected'; ?>>5 = perfektní</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="selRecommend">Doporučení:</label>
+                <select class="form-control" name="rating_style" id="selRecommend">
+                    <option value="1" <?php if ($review['rating_style'] == '1') echo 'selected'; ?>>1 = nepřijmout</option>
+                    <option value="2" <?php if ($review['rating_style'] == '2') echo 'selected'; ?>>2 = spíše nepřijmout</option>
+                    <option value="3" <?php if ($review['rating_style'] == '3') echo 'selected'; ?>>3 = nevím</option>
+                    <option value="4" <?php if ($review['rating_style'] == '4') echo 'selected'; ?>>4 = spíše přijmout</option>
+                    <option value="5" <?php if ($review['rating_style'] == '5') echo 'selected'; ?>>5 = přijmout</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Poznámky: </label>
+                <textarea class="form-control" rows="10" name="note" id="note" placeholder="Místo pro poznámku"><?= $review['note'] ?></textarea>
+            </div>
+            <div class="form-group">
+                <div class="text-center">
+                    <button class="btn btn-lg btn-success" type="submit" name="submit">Uložit</button>
+                </div>
+            </div>
+        </form>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace( 'description' );
+</script>

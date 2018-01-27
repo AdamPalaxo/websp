@@ -1,21 +1,440 @@
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="active"> Přehled</li>
+        </ol>
+    </div>
+</section>
 
-<table class="table table-bordered table-striped table-hoover">
-    <tr class="active">
-        <th rowspan="2">Název<br></th>
-        <th rowspan="2">Autoři<br></th>
-        <th colspan="8">Recenze<br></th>
-        <th rowspan="2">Rozhodnutí <br></th>
-    </tr>
-    <tr class="active">
-        <th>Recenzent<br></th>
-        <th>Orig.<br></th>
-        <th>Téma<br></th>
-        <th>Tech.<br></th>
-        <th>Jaz.<br></th>
-        <th>Dop.<br></th>
-        <th>Celk.<br></th>
-        <th>Vymazat<br></th>
-    </tr>
-    <tbody>
-    </tbody>
-</table>
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="index.php?admin" class="list-group-item active main-color-bg">
+                    <span class="glyphicon glyphicon-cog"></span> Dashboard
+                    </a>
+                    <button type="button" class="list-group-item" id="usersScroll"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Uživatelé<span class="badge badge-primary badge-pill"> <?= $counts['users'] ?> </span></button>
+                    <button type="button" class="list-group-item"   id="articleScroll"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Příspěvky<span class="badge"> <?= $counts['articles'] ?></span></button>
+                    <button type="button" class="list-group-item"   id="reviewScroll"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Recenze<span class="badge"> <?= $counts['reviews'] ?></span></button>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <!-- CMS of users, articles and reviews -->
+
+                <div class="panel panel-default">
+                    <div class="panel-heading main-color-bg">
+                        <h3 class="panel-title">Přehled</h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon glyphicon-minus"></i></span>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <div class="well dash-box">
+                            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?= $counts['users'] ?> </h2>
+                                <h4>Uživatelé</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="well dash-box">
+                                <h2><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> <?= $counts['articles'] ?></h2>
+                                <h4>Články</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="well dash-box">
+                                <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <?= $counts['reviews'] ?></h2>
+                                <h4>Recenze</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="well dash-box">
+                                <h2><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 203</h2>
+                                <h4>Návštěvy</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Articles -->
+<div class="container" id="articles">
+    <div class="panel panel-default">
+        <div class="panel-heading main-color-bg">
+            <h3 class="panel-title"> Články</h3>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon glyphicon-minus"></i></span>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr class="success">
+                        <th class="text-center" rowspan="2">Název<br></th>
+                        <th class="text-center" rowspan="2">Autoři<br></th>
+                        <th class="text-center" colspan="8">Recenze<br></th>
+                        <th class="text-center" rowspan="2">Rozhodnutí <br></th>
+                    </tr>
+                    <tr class="success">
+                        <th class="text-center">Recenzent<br></th>
+                        <th class="text-center">Orig.<br></th>
+                        <th class="text-center">Téma<br></th>
+                        <th class="text-center">Tech.<br></th>
+                        <th class="text-center">Jaz.<br></th>
+                        <th class="text-center">Dop.<br></th>
+                        <th class="text-center">Celk.<br></th>
+                        <th class="text-center">Vymazat<br></th>
+                    </tr>
+                    <tbody>
+                    <?php foreach ($articles as $article) : ?>
+                    <tr>
+                        <td rowspan="3"><?= $article['title'] ?></td>
+                        <td rowspan="3"><?= $article['author'] ?></td>
+
+                        <?php if ($article['reviewCount'] > 0) : ?>
+                        <td><?= $article['reviews'][0]['reviewer'] ?></td>
+                        <td><?= $article['reviews'][0]['rating_originality'] ?> </td>
+                        <td><?= $article['reviews'][0]['rating_theme'] ?> </td>
+                        <td><?= $article['reviews'][0]['rating_language'] ?> </td>
+                        <td><?= $article['reviews'][0]['rating_awesomeness'] ?> </td>
+                        <td><?= $article['reviews'][0]['rating_style'] ?> </td>
+                        <td><b><?= $article['reviews'][0]['rating'] ?> </b></td>
+                        <td><span><a class="remove" href="index.php?admin=deletereview&id=<?= $article['reviews'][0]['id'] ?>"><span class="glyphicon glyphicon-trash"></span></a></span></td>
+                        <?php else: ?>
+                        <form id="<?= article . $article['id']?>reviewer0 ?>" method="POST" style="margin: 0;" action="index.php?admin=addreview&articleid=<?= $article['id']?>&reviewer=0">
+                            <td>
+                                <select class="form-control input-sm" name="sel<?= $article['id']?>Reviewer0">
+                                    <?php foreach ($reviewers as $user) : ?>
+                                    <option><?= $user['name'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </td>
+                            <td colspan="7"><input type="button" class="btn btn-success" value="Přidělit k recenzi" onclick="submitReview(this.form);"></td>
+                        </form>
+
+                        <?php endif ?>
+                        <td rowspan="3">
+                            <form method="POST" style="margin: 0;" action="index.php?admin=changeapproved&id=<?= $article['id']?>">
+                                <?php if ($article['approved'] == '0') : ?>
+                                <select class="form-control" name="approved" id="selApproved" onchange="approveArticle(this.form, this.value);">
+                                    <option value="0">V recenzním řízení</option>
+                                    <option value="1">Schváleno</option>
+                                    <option value="2">Neschváleno</option>
+                                </select>
+                                <?php elseif ($article['approved'] == '1') : ?>
+                                    <b>Schváleno</b>
+                                <?php elseif ($article['approved'] == '2') : ?>
+                                    <b>Neschváleno</b>
+                                <?php endif ?>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <?php if ($article['reviewCount'] > 1) : ?>
+                        <td><?= $article['reviews'][1]['reviewer'] ?></td>
+                        <td><?= $article['reviews'][1]['rating_originality'] ?> </td>
+                        <td><?= $article['reviews'][1]['rating_theme'] ?> </td>
+                        <td><?= $article['reviews'][1]['rating_language'] ?> </td>
+                        <td><?= $article['reviews'][1]['rating_awesomeness'] ?> </td>
+                        <td><?= $article['reviews'][1]['rating_style'] ?> </td>
+                        <td><b><?= $article['reviews'][1]['rating'] ?> </b></td>
+                        <td><span><a class="remove" href="index.php?admin=deletereview&id=<?= $article['reviews'][1]['id']  ?>"><span class="glyphicon glyphicon-trash"></span></a></span></td>
+                        <?php else: ?>
+                        <form id="<?= article . $article['id']?>reviewer1 ?>" method="POST" style="margin: 0;" action="index.php?admin=addreview&articleid=<?= $article['id']?>&reviewer=1">
+                            <td>
+                                <select class="form-control input-sm" name="sel<?= $article['id']?>Reviewer1">
+                                    <?php foreach ($reviewers as $user) : ?>
+                                    <option><?= $user['name'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </td>
+                            <td colspan="7"><input type="button" class="btn btn-success confirm" value="Přidělit k recenzi" onclick="submitReview(this.form);"></td>
+                        </form>
+                        <?php endif ?>
+                    </tr>
+                    <tr>
+                        <?php if ($article['reviewCount'] > 2) : ?>
+                        <td><?= $article['reviews'][2]['reviewer'] ?></td>
+                        <td><?= $article['reviews'][2]['rating_originality'] ?> </td>
+                        <td><?= $article['reviews'][2]['rating_theme'] ?> </td>
+                        <td><?= $article['reviews'][2]['rating_language'] ?> </td>
+                        <td><?= $article['reviews'][2]['rating_awesomeness'] ?> </td>
+                        <td><?= $article['reviews'][2]['rating_style'] ?> </td>
+                        <td><b><?= $article['reviews'][2]['rating'] ?> </b></td>
+                        <td><span><a class="remove" href="index.php?admin=deletereview&id=<?= $article['reviews'][2]['id']  ?>"><span class="glyphicon glyphicon-trash"></span></a></span></td>
+                        <?php else: ?>
+                        <form id="<?= article . $article['id']?>reviewer2 ?>" method="POST" style="margin: 0;" action="index.php?admin=addreview&articleid=<?= $article['id']?>&reviewer=2">
+                            <td>
+                                <select class="form-control input-sm" name="sel<?= $article['id']?>Reviewer2">
+                                    <?php foreach ($reviewers as $user) : ?>
+                                    <option><?= $user['name'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </td>
+                            <td colspan="7"><input type="button" class="confirm btn btn-success" value="Přidělit k recenzi" onclick="submitReview(this.form);"></td>
+                        </form>
+                        <?php endif ?>
+                    </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table with users -->
+<section id="users">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading main-color-bg">
+                <h3 class="panel-title"> Uživatelé</h3>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon glyphicon-minus"></i></span>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr class="active">
+                            <th class="text-center" rowspan="">Uživatelské jméno<br></th>
+                            <th class="text-center" rowspan="">Jméno<br></th>
+                            <th class="text-center" rowspan="">Email<br></th>
+                            <th class="text-center" rowspan="">Hodnost<br></th>
+                            <th class="text-center" rowspan="">Aktivní<br></th>
+                            <th class="text-center" rowspan="">Smazat<br></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php foreach ($users as $user) : ?>
+                        <?php if ($user['role'] != 'admin') : ?>
+                        <tr>
+                            <td><?= $user['username'] ?></td>
+                            <td><?= $user['name'] ?></td>
+                            <td><?= $user['email'] ?></td>
+                            <td>
+                                <form method="POST" style="margin: 0;" action="index.php?admin=changeuser&id=<?= $user['id']?>">
+                                    <select class="form-control input-sm" name="role" onchange="this.form.submit()">
+                                        <?php if ($user['role'] == 'autor') : ?>
+                                        <option selected>Autor</option>
+                                        <option>Recenzent</option>
+                                        <?php else :?>
+                                        <option>Autor</option>
+                                        <option selected>Recenzent</option>
+                                        <?php endif ?>
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="POST" style="margin: 0;" action="index.php?admin=changeuser&id=<?= $user['id']?>">
+                                    <select class="form-control input-sm" name="active" onchange="this.form.submit()">
+                                        <?php if ($user['active'] == '1') : ?>
+                                        <option value="1" selected>Aktivní</option>
+                                        <option value="0">Zablokovaný</option>
+                                        <?php else :?>
+                                        <option value="1">Aktivní</option>
+                                        <option value="0"selected>Zablokovaný</option>
+                                        <?php endif ?>
+                                    </select>
+                                </form>
+                            </td>
+                            <td><span><a class="remove" href="index.php?admin=deleteuser&id=<?= $user['id'] ?>"><span class="glyphicon glyphicon-trash"></span></a></span></td>
+                        </tr>
+                        <?php endif ?>
+                        <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Collapse given panel -->
+<script>
+    $(document).on('click', '.panel-heading span.clickable', function(e){
+        var $this = $(this);
+        if(!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon glyphicon-minus').addClass('glyphicon glyphicon-plus');
+        } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon glyphicon-plus').addClass('glyphicon glyphicon-minus');
+        }
+    })
+</script>
+
+<!-- Submit add review action -->
+<script>
+    function submitReview(form) {
+    $.confirm({
+        title: 'Přidělit článek!',
+        content: 'Skutečně chcete přidělit článek k recenzi?',
+        theme: 'dark',
+        escapeKey: true,
+        backgroundDismiss: false,
+        buttons: {
+            confirm: {
+                text : "Ano",
+                action: function () {
+                form.submit();
+            }},
+            cancel: {
+                text : "Ne"
+            },
+            somethingElse: {
+                text: 'Nápověda',
+                btnClass: 'btn-blue',
+                keys: ['enter', 'shift'],
+                action: function(){
+                    $.alert({
+                        title: 'Nápověda',
+                        content: 'Při kliknutí na tlačítko <b>ano</b>, bude článek přidělen vybranému uživateli k recenzování.',
+                        theme: 'dark',
+                    });
+                    return false;
+                }
+            }
+        }
+    });
+}
+</script>
+
+<!-- Approve or disapprove article -->
+<script>
+    function approveArticle(form, value) {
+
+        var status = parseInt(value);
+        var statusText = '';
+
+        if (status === 1)
+        {
+            statusText = 'schváleno';
+        }
+        else if (status === 2)
+        {
+            statusText = 'neschváleno';
+        }
+
+        $.confirm({
+            title: 'Změnit stav článku!',
+            content: 'Opravdu chcete změnit stav článku na <b>' +  statusText + '</b>?',
+            theme: 'dark',
+            escapeKey: true,
+            backgroundDismiss: false,
+            buttons: {
+                confirm: {
+                    text : "Ano",
+                    action: function () {
+                        form.submit();
+                    }},
+                cancel: {
+                    text : "Ne",
+                    action: function () {
+                        $('#selApproved').val('0')
+                    }},
+                somethingElse: {
+                    text: 'Nápověda',
+                    btnClass: 'btn-blue',
+                    keys: ['enter', 'shift'],
+                    action: function(){
+                        $.alert({
+                            title: 'Nápověda',
+                            content: 'Při kliknutí na tlačítko <b>ano</b>, bude změněn statut článku na požadovaný typ.',
+                            theme: 'dark',
+                        });
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<!-- Delete user -->
+<script>
+    function deleteUser(form, value) {
+
+        var status = parseInt(value);
+        var statusText = '';
+
+        if (status === 1)
+        {
+            statusText = 'schváleno';
+        }
+        else if (status === 2)
+        {
+            statusText = 'neschváleno';
+        }
+
+        $.confirm({
+            title: 'Změnit stav článku!',
+            content: 'Opravdu chcete změnit stav článku na <b>' +  statusText + '</b>?',
+            theme: 'dark',
+            escapeKey: true,
+            backgroundDismiss: false,
+            buttons: {
+                confirm: {
+                    text : "Ano",
+                    action: function () {
+                        form.submit();
+                    }},
+                cancel: {
+                    text : "Ne",
+                    action: function () {
+                        $('#selApproved').val('0')
+                    }},
+                somethingElse: {
+                    text: 'Nápověda',
+                    btnClass: 'btn-blue',
+                    keys: ['enter', 'shift'],
+                    action: function(){
+                        $.alert({
+                            title: 'Nápověda',
+                            content: 'Při kliknutí na tlačítko <b>ano</b>, bude změněn statut článku na požadovaný typ.',
+                            theme: 'dark',
+                        });
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<!-- Scroll to users -->
+<script>
+    $("#usersScroll").click(function() {
+        $('html, body').animate({
+            scrollTop: $("#users").offset().top
+        }, 2000);
+    });
+</script>
+
+<!-- Scroll to articles -->
+<script>
+    $("#articleScroll").click(function() {
+        $('html, body').animate({
+            scrollTop: $("#articles").offset().top
+        }, 1000);
+    });
+</script>
+
+<!-- Scroll to reviews -->
+<script>
+    $("#reviewScroll").click(function() {
+        $('html, body').animate({
+            scrollTop: $("#articles").offset().top
+        }, 1000);
+    });
+</script>

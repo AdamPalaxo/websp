@@ -8,6 +8,7 @@
 
 class RouterController extends BaseController
 {
+    /** @var BaseController */
     protected $controller;
 
     public function process($parameters)

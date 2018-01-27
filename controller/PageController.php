@@ -10,24 +10,14 @@ class PageController extends BaseController
 {
     function process($parameters)
     {
-        $pageManager = new PageManager();
+        $articleManager = new ArticleManager();
+        $this->data['articles'] = $articleManager->getAllArticles();
 
-        $page = $pageManager->getPage($parameters[0]);
+        $this->view = $_GET['page'];
 
-        if(!$page)
+        if (!file_exists("view/" . $_GET['page'] . ".html"))
         {
-            $this->redirect('error');
+            $this->redirect('index.php?error=404');
         }
-
-        $this->heading = array(
-            'title' => $page['title'],
-            'keywords' => $page['keywords'],
-            'description' => $page['description'],
-        );
-
-        $this->data['title'] = $page['title'];
-        $this->data['content'] = $page['content'];
-
-        $this->view = 'page';
     }
 }

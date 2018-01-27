@@ -1,0 +1,22 @@
+/* footer */
+
+#footer{
+    background: #333333;
+    color: #ffffff;
+    text-align: center;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.remove {
+    color: red;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+
+p {
+    text-align: justify;
+}

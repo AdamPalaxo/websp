@@ -14,7 +14,7 @@ class UserManager
     }
 
     // Registers new user
-    public function register($username, $password, $passwordAgain)
+    public function register($username, $password, $passwordAgain, $name, $email)
     {
         if($password != $passwordAgain)
         {
@@ -24,8 +24,10 @@ class UserManager
         $user = array(
             'username' => $username,
             'password' => $this->encryptPassword($password),
+            'name' => $name,
+            'email' => $email,
             'active' => 1,
-            'role' => "publisher"
+            'role' => "autor"
         );
 
         try
@@ -40,23 +42,31 @@ class UserManager
         }
     }
 
-    // Logs user into system
+    /**
+     * Logs user in the system.
+     *
+     * @param string $username username of the user
+     * @param string $password password of the user
+     * @throws UserException thrown if name of password is invalid
+     */
     public function login($username, $password)
     {
 
-        $user = Db::queryOne('SELECT username, password, active, role
+        $user = Db::queryOne('SELECT id, username, password, active, role
                                     FROM user WHERE username = ?',
                                     array($username));
 
         if(!$user || !password_verify($password, $user['password']))
         {
-            throw new UserException('Neplatné uživatelské jméno nebo heslo');
+            throw new UserException('Neplatné uživatelské jméno nebo heslo.');
         }
 
         $_SESSION['user'] = $user;
     }
 
-    // Log outs user
+    /**
+     * Logs out current user.
+     */
     public function logout()
     {
         unset($_SESSION['user']);

@@ -1,0 +1,36 @@
+body{
+    background: #f4f4f4;
+}
+
+.main-color-bg{
+    background-image: none !important;
+    background-color: #e74c3c !important;
+
+    border-color: #c8392b !important;
+    color: #ffffff !important;
+}
+
+/* admin panel */
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.dash-box{
+    text-align: center;
+}
+
+/* Breadcrumb */
+
+.breadcrumb{
+    background: #cccccc;
+    color: #333333;
+}
+
+.breadcrumb a{
+    color: #333333;
+}

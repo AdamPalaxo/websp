@@ -6,21 +6,37 @@ abstract class BaseController
     protected $view = "";
     protected $heading = array('title' => '', 'keywords' => '', 'description' => '');
 
-    // Main method of controller
+    /**
+     * Main method of controller that
+     * all other controllers extends.
+     *
+     * @param $parameters
+     * @return mixed
+     */
     abstract function process($parameters);
 
-    // Render view
+    /**
+     * Renders desired view.
+     *
+     */
     public function renderView()
     {
         if ($this->view)
         {
             extract($this->validate($this->data));
             extract($this->data, EXTR_PREFIX_ALL, "");
-            require("view/" . $this->view . ".html");
+            if (file_exists("view/" . $this->view . ".html"))
+            {
+                require("view/" . $this->view . ".html");
+            }
         }
     }
 
-    // Redirect to given URL
+    /**
+     * Redirects to given url.
+     *
+     * @param string $url address to redirect
+     */
     public function redirect($url)
     {
         header("Location: /$url");
@@ -28,20 +44,29 @@ abstract class BaseController
         exit;
     }
 
-    // Adds new message for user
-    public function addMessage($message)
+    /**
+     * Adds new message for user.
+     *
+     * @param string $message message of user
+     * @param string $style style of the message
+     */
+    public function addMessage($message, $style)
     {
         if(isset($_SESSION['messages']))
         {
-            $_SESSION['messages'][] = $message;
+            $_SESSION['messages'][] = array('message' => $message, 'style' => $style);
         }
         else
         {
-            $_SESSION['messages'] = array($message);
+            $_SESSION['messages'] = array(array('message' => $message,'style' => $style)); array($message);
         }
     }
 
-    // Returns messages for user
+    /**
+     * Returns messages for user.
+     *
+     * @return array array of messages
+     */
     public function returnMessages()
     {
         if(isset($_SESSION['messages']))
@@ -56,7 +81,13 @@ abstract class BaseController
         }
     }
 
-    // Validates variables for rendering in HTML site
+    /**
+     * Validates variables for rendering in HTML site
+     * to prevent cross-site scripting (XSS).
+     *
+     * @param null $x given html
+     * @return array|null|string validated html
+     */
     private function validate($x = null)
     {
         if(!isset($x))
@@ -78,6 +109,24 @@ abstract class BaseController
         else
         {
             return $x;
+        }
+    }
+
+    /**
+     * Checks if user exist or has got
+     * admin access.
+     *
+     * @param bool $admin set if user must be admin
+     */
+    public function checkUser($admin = false)
+    {
+        $userManager = new UserManager();
+        $user = $userManager->returnUser();
+
+        if (!$user || ($admin && $user['role'] != 'admin'))
+        {
+            $this->addMessage('Nedostatečná oprávnění.', "warning");
+            $this->redirect('index.php?page=intro');
         }
     }
 

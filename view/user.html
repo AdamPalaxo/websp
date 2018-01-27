@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label for="sel1">Uživatelé:</label>
+    <select class="form-control" id="sel1">
+        <?php foreach ($users as $user) : ?>
+            <option><?= $user['username'] ?></option>
+        <?php endforeach ?>
+    </select>
+</div> 

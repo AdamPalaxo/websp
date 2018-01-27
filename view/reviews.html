@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="text-center">
+                <h1>Seznam příspěvků k posouzení</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Table with reviews -->
+<section id="table">
+   <div class="container">
+       <div class="table-responsive">
+           <table class="table table-bordered table-striped table-hoover">
+               <tr class="success">
+                   <th class="text-center">Název<br></th>
+                   <th class="text-center">Ohodnocení<br></th>
+                   <th class="text-center">Stav příspěvku<br></th>
+               </tr>
+               <tbody>
+               <?php foreach ($reviews as $review) : ?>
+               <tr>
+                   <?php if($review['approved'] == 0) : ?>
+                        <td><a href="index.php?review=edit&id=<?= $review['id'] ?>"> <?= $review['title'] ?></a></td>
+                        <td><?= $review['rating'] ?></td>
+                        <td>V recenzním řízení</td>
+                   <?php else : ?>
+                        <td><?= $review['title'] ?></a></td>
+                        <td><?= $review['rating'] ?></td>
+                       <?php if ($review['approved'] == '1') : ?>
+                            <td><b>Schváleno</b></td>
+                       <?php elseif ($review['approved'] == '2') : ?>
+                            <td><b>Neschváleno</b></td>
+                       <?php endif ?>
+                   <?php endif ?>
+               </tr>
+               <?php endforeach ?>
+               </tbody>
+           </table>
+       </div>
+   </div>
+</section>
+
+<!-- WYSIWIG editor CKEditor -->
+<script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+<script>
+    $('#description').filestyle({
+        buttonText : ' Procházet...',
+        iconName : 'glyphicon glyphicon-file',
+        buttonName : 'btn-warning'
+    });
+</script>
+
+<script>
+    CKEDITOR.replace( 'description' );
+</script>
