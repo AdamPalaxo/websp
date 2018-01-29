@@ -17,9 +17,6 @@ class AjaxController extends BaseController
 
         if ($_POST)
         {
-            print_r($_GET);
-            print_r($_POST);
-
             // Change user parameters
             if ($_GET['admin'] == 'changeuser' && isset($_GET['id']))
             {
