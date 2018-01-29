@@ -63,17 +63,35 @@ class ReviewController extends BaseController
         // Editing review
         if ($_GET['review'] == 'edit' && isset($_GET['id']))
         {
-            try
-            {
-                $this->heading['title'] = "Editace posudku";
-                $this->data['review'] = $reviewManager->getReviewByID($_GET['id']);
 
-                $this->view = "edit";
-            }
-            catch (ArticleException $ex)
+            $review = $reviewManager->getReviewByID($_GET['id']);
+
+            if (!$review)
             {
-                $this->addMessage($ex->getMessage(), "error");
+                $this->addMessage("Zvolená recenze neexistuje.", "warning");
+                $this->redirect("index.php?review");
             }
+
+            if ($_SESSION['user']['id'] == $review['user_id'])
+            {
+                try
+                {
+                    $this->heading['title'] = "Editace posudku";
+                    $this->data['review'] = $reviewManager->getReviewByID($_GET['id']);
+
+                    $this->view = "edit";
+                }
+                catch (ArticleException $ex)
+                {
+                    $this->addMessage($ex->getMessage(), "error");
+                }
+            }
+            else
+            {
+                $this->addMessage("Nemáte dostatečná oprávnění k editaci této recenze!", "warning");
+                $this->redirect("index.php?review");
+            }
+
         }
         elseif ($_GET['review'] == 'download' && isset($_GET['id']))
         {
