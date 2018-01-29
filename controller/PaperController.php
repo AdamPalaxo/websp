@@ -95,6 +95,17 @@ class PaperController extends BaseController
         $fileSize = $_FILES['file']['size'];
         $fileType = $_FILES['file']['type'];
 
+        if ($fileSize > $_POST['MAX_FILE_SIZE'])
+        {
+            $this->addMessage("Překročena maximální velikost souboru 10MB.", "warning");
+            $this->redirect("index.php?paper");
+        }
+        else if ($fileType != 'application/pdf')
+        {
+            $this->addMessage("Nejedná se o platný typ souboru PDF.", "warning");
+            $this->redirect("index.php?paper");
+        }
+
         $fp = fopen($tmp_name, 'r');
         $content = fread($fp, filesize($tmp_name));
         fclose($fp);
