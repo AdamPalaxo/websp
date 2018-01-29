@@ -32,3 +32,11 @@ a.disabled {
     font-weight: bold;
     pointer-events: none;
 }
+
+.striped {
+    background-color: #F9F9F9 !important;
+}
+
+.non-striped {
+    background-color : #ffffff !important;
+}

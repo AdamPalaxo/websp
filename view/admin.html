@@ -75,7 +75,7 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped">
                     <tr class="success">
                         <th class="text-center" rowspan="2">Název<br></th>
                         <th class="text-center" rowspan="2">Autoři<br></th>
@@ -93,8 +93,15 @@
                         <th class="text-center">Vymazat<br></th>
                     </tr>
                     <tbody>
+                    <?php $odd = 1;?>
                     <?php foreach ($articles as $article) : ?>
                     <tr>
+                        <?php if ($odd == 0) : ?>
+                        <?php $odd = 1; ?>
+                        <?php elseif ($odd == 1) : ?>
+                        <?php $odd = 0; ?>
+                        <?php endif ?>
+
                         <td rowspan="3"><?= $article['title'] ?></td>
                         <td rowspan="3"><?= $article['creators'] ?></td>
 
@@ -136,7 +143,7 @@
                             </form>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="<?php if ($odd == 0) : echo 'striped'; else : echo 'non-striped'; endif?>">
                         <?php if ($article['reviewCount'] > 1) : ?>
                         <td><?= $article['reviews'][1]['reviewer'] ?></td>
                         <td><?= $article['reviews'][1]['rating_originality'] ?> </td>
