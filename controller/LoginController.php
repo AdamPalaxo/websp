@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class LoginController handles login of user.
+ */
 class LoginController extends BaseController
 {
     /**

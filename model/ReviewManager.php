@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class ReviewManager provides methods for managing reviews.
+ */
 class ReviewManager
 {
     /**

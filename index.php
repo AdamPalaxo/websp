@@ -1,3 +1,4 @@
+
 <?php
 
 session_start();
@@ -20,7 +21,16 @@ spl_autoload_register("autoload");
 
 Db::connect("127.0.0.1", "kivweb", "root", "");
 
-$router = new RouterController();
-$router->process(array($_SERVER['REQUEST_URI']));
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+{
+    $router = new AjaxController();
+    $router->process(array($_SERVER['REQUEST_URI']));
+}
+else
+{
+    $router = new URLController();
+    $router->process(array($_SERVER['REQUEST_URI']));
 
-$router->renderView();
+    $router->renderView();
+}
+

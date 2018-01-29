@@ -23,11 +23,11 @@
                <?php foreach ($reviews as $review) : ?>
                <tr>
                    <?php if($review['approved'] == 0) : ?>
-                        <td><a href="index.php?review=edit&id=<?= $review['id'] ?>"> <?= $review['title'] ?></a></td>
+                        <td><a href="index.php?review=edit&id=<?= $review['id'] ?>" class="btn btn-link"> <?= $review['title'] ?></a></td>
                         <td><?= $review['rating'] ?></td>
                         <td>V recenzním řízení</td>
                    <?php else : ?>
-                        <td><?= $review['title'] ?></a></td>
+                   <td><button class="btn btn-link" disabled><?= $review['title'] ?></button></td>
                         <td><?= $review['rating'] ?></td>
                        <?php if ($review['approved'] == '1') : ?>
                             <td><b>Schváleno</b></td>

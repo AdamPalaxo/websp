@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivona
- * Date: 16.11.2017
- * Time: 11:24
- */
 
+/**
+ * Class LoginController registration of the new user.
+ */
 class RegistrationController extends BaseController
 {
-
     /**
      * Registers new user.
      *

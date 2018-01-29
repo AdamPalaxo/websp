@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class LogoutController handles logout of user.
+ */
 class LogoutController extends BaseController
 {
     /**

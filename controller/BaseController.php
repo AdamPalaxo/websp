@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class BaseController is extended by all other controllers.
+ * It renders view, validate HTML, redirecting and check users
+ * rights.
+ */
 abstract class BaseController
 {
     protected $data = array();
@@ -10,7 +15,7 @@ abstract class BaseController
      * Main method of controller that
      * all other controllers extends.
      *
-     * @param $parameters
+     * @param array $parameters given parameters
      * @return mixed
      */
     abstract function process($parameters);

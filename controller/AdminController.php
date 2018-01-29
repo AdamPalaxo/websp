@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class AdminController handles administration part of application.
+ */
 class AdminController extends BaseController
 {
 
@@ -10,7 +13,7 @@ class AdminController extends BaseController
      * also handles blocking or deleting
      * user accounts.
      *
-     * @param $parameters
+     * @param array $parameters given parameters
      * @return void
      */
     public function process($parameters)
@@ -28,7 +31,7 @@ class AdminController extends BaseController
         $articlesWithReviews = $this->loadArticlesWithReviews($articles);
 
 
-        // Change user attributes or change article status
+        // Change article status
         if ($_POST)
         {
             if ($_GET['admin'] == 'changeapproved' && isset($_GET['id']))
@@ -58,59 +61,6 @@ class AdminController extends BaseController
                     $this->addMessage($ex->getMessage(), "danger");
                 }
 
-            }
-
-            if($_GET['admin'] == 'changeuser' && isset($_GET['id']))
-            {
-                $user = array(
-                    'id' => '',
-                    'username' => '',
-                    'password' => '',
-                    'name' => '',
-                    'email' => '',
-                    'active' => '',
-                    'role' => '',
-                );
-
-
-
-
-                if (isset($_POST['role']))
-                {
-                    try
-                    {
-                        $keys = array('role');
-                        $user= array_intersect_key($_POST, array_flip($keys));
-
-                        $authorManager->updateUser($_GET['id'], $user);
-
-                        $this->addMessage('Role uživatele byla úspěšně změněna.', 'success');
-                        $this->redirect('index.php?admin');
-
-                    }
-                    catch (UserException $ex)
-                    {
-                        $this->addMessage($ex->getMessage(), "danger");
-                    }
-                }
-                elseif (isset($_POST['active']))
-                {
-                    try
-                    {
-                        $keys = array('active');
-                        $user= array_intersect_key($_POST, array_flip($keys));
-
-                        $authorManager->updateUser($_GET['id'], $user);
-
-                        $this->addMessage('Aktivita uživatelského účtu byla úspěšně změněna.', 'success');
-                        //$this->redirect('index.php?admin');
-
-                    }
-                    catch (UserException $ex)
-                    {
-                        $this->addMessage($ex->getMessage(), "danger");
-                    }
-                }
             }
         }
 
@@ -148,27 +98,12 @@ class AdminController extends BaseController
                 $this->addMessage("Recenze úspěšně smazána.", "success");
                 $this->redirect("index.php?admin");
             }
-            catch (ArticleException $ex)
+            catch (ReviewException $ex)
             {
                 $this->addMessage($ex->getMessage(), "danger");
             }
         }
 
-        // Delete user
-        if ($_GET['admin'] == 'deleteuser' && isset($_GET['id']))
-        {
-            try
-            {
-                $id = $_GET['id'];
-                $authorManager->deleteUser($id);
-                $this->addMessage("Uživatel úspěšně smazán.", "success");
-                $this->redirect("index.php?admin");
-            }
-            catch (ArticleException $ex)
-            {
-                $this->addMessage($ex->getMessage(), "danger");
-            }
-        }
 
         $this->data['articles'] = $articlesWithReviews;
         $this->data['users'] = $authorManager->getAllUsers();

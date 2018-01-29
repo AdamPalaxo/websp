@@ -1,19 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivona
- * Date: 22.1.2018
- * Time: 13:56
- */
 
+/**
+ * Class PdfController handles showing of PDF
+ * file of the article.
+ */
 class PdfController extends BaseController
 {
-
     /**
-     * Main method of controller that
-     * all other controllers extends.
+     * Shows PDF file of the article.
      *
-     * @param $parameters
+     * @param array $parameters given parameters
      * @return mixed
      */
     function process($parameters)

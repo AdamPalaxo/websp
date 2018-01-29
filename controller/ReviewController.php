@@ -1,7 +1,17 @@
 <?php
 
+/**
+ * Class ReviewController handles reviewing of the articles.
+ */
 class ReviewController extends BaseController
 {
+    /**
+     * Edits review of the article
+     * and download the file of article.
+     *
+     * @param array $parameters
+     * @return mixed|void
+     */
     public function process($parameters)
     {
         $this->heading['title'] = "Seznam příspěvků k posouzení";
@@ -17,11 +27,9 @@ class ReviewController extends BaseController
         $reviewManager = new ReviewManager();
         $articleManager = new ArticleManager();
 
-        // Edit review
+        // Posting edited review
         if ($_POST)
         {
-            print_r($_POST);
-
             try
             {
                 $review = array(

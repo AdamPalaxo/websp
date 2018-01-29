@@ -6,8 +6,17 @@
  * Time: 23:32
  */
 
+/**
+ * Class UserManager provides methods for managing users.
+ */
 class UserManager
 {
+    /**
+     * Encrypts user password.
+     *
+     * @param string $password password of user
+     * @return bool|string encrypted password
+     */
     public function encryptPassword($password)
     {
         return password_hash($password, PASSWORD_BCRYPT);

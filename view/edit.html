@@ -1,20 +1,23 @@
 <div class="container">
-    <div class="text-center">
-        <h1></h1>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="text-center">
+                <h1>Editace posudku</h1>
+                <h3>Název příspěvku: <strong><?= $review['title'] ?></strong></h3>
+            </div>
+        </div>
     </div>
 
-    <div class="text-center">
-        <h3>Název příspěvku: <strong><?= $review['title'] ?></strong></h3>
-    </div>
-
-    <div class="text-center">
-        <h3><a href="index.php?review=download&id=<?= $review['article_id'] ?>">Stáhnout příspěvek</a></h3>
+    <div class="form-group">
+        <div class="text-center">
+            <h3><a href="index.php?review=download&id=<?= $review['article_id'] ?>" class="btn btn-lg btn-info">Stáhnout příspěvek</a></h3>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading main-color-bg">
+                <div class="panel-heading secondary-color-bg">
                     <h3 class="panel-title">Editace posudku</h3>
                 </div>
 

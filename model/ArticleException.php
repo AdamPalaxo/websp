@@ -1,11 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivona
- * Date: 11.12.2017
- * Time: 15:05
- */
 
+/**
+ * Class ArticleException is exception its messages we outputs to user.
+ */
 class ArticleException extends Exception
 {
 

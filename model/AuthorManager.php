@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class AuthorManager provides methods for managing authors.
+ */
 class AuthorManager
 {
 

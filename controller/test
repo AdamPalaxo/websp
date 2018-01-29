@@ -1,4 +1,0 @@
-<?php
-$attr = $_POST["param1"];
-echo "Myslím, že číslo, které si myslíš je: ".$attr;
-?>

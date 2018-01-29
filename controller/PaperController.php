@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class PaperController handles adding or deleting of the article.
+ */
 class PaperController extends BaseController
 {
+    /**
+     * Adds or deletes the article.
+     *
+     * @param array $parameters given parameters
+     * @return mixed|void
+     */
     public function process($parameters)
     {
         $this->checkUser();

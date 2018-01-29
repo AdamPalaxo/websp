@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class Db is wrapper for easier manipulation with database
+ * with use PDO with automatic security of parameters in queries.
+ */
 class Db
 {
     /** @var PDO */

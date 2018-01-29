@@ -10,6 +10,14 @@ body{
     color: #ffffff !important;
 }
 
+.secondary-color-bg{
+    background-image: none !important;
+    background-color: #5cb85c !important;
+
+    border-color: #5cb85c !important;
+    color: #ffffff !important;
+}
+
 /* admin panel */
 .panel-heading span {
     margin-top: -20px;

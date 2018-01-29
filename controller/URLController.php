@@ -1,16 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivona
- * Date: 8.12.2017
- * Time: 15:06
- */
 
+/**
+ * Class RouterController is special type of controller
+ * that by url calls right controller and puts in layout
+ * view created by that controller.
+ */
 class URLController extends BaseController
 {
     /** @var BaseController */
     protected $controller;
 
+    /**
+     * Parses url and creates proper controller.
+     *
+     * @param array $parameters
+     * @return mixed|void
+     */
     public function process($parameters)
     {
         $parsedURL = parse_url($parameters[0], PHP_URL_QUERY);
@@ -34,6 +39,7 @@ class URLController extends BaseController
 
         $this->controller->process($path);
 
+
         $this->data['title'] = $this->controller->heading['title'];
         $this->data['keywords'] = $this->controller->heading['keywords'];
         $this->data['description'] = $this->controller->heading['description'];
@@ -42,6 +48,12 @@ class URLController extends BaseController
         $this->view = 'index';
     }
 
+    /**
+     * Parses url.
+     *
+     * @param string $parsedURL url to be parsed.
+     * @return array parsed url
+     */
     public function parseURL($parsedURL)
     {
         $path = array($parsedURL);

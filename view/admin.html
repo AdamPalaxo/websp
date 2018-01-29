@@ -96,7 +96,7 @@
                     <?php foreach ($articles as $article) : ?>
                     <tr>
                         <td rowspan="3"><?= $article['title'] ?></td>
-                        <td rowspan="3"><?= $article['author'] ?></td>
+                        <td rowspan="3"><?= $article['creators'] ?></td>
 
                         <?php if ($article['reviewCount'] > 0) : ?>
                         <td><?= $article['reviews'][0]['reviewer'] ?></td>
@@ -222,7 +222,7 @@
                             <td><?= $user['email'] ?></td>
                             <td>
                                 <form method="POST" style="margin: 0;" action="index.php?admin=changeuser&id=<?= $user['id']?>">
-                                    <select class="form-control input-sm" name="role" onchange="this.form.submit()">
+                                    <select class="form-control input-sm" name="role" onchange="changeRole('<?= $user['username'] ?>', this)">
                                         <?php if ($user['role'] == 'autor') : ?>
                                         <option selected>Autor</option>
                                         <option>Recenzent</option>
@@ -235,7 +235,7 @@
                             </td>
                             <td>
                                 <form method="POST" style="margin: 0;" action="index.php?admin=changeuser&id=<?= $user['id']?>">
-                                    <select class="form-control input-sm" name="active" onchange="this.form.submit()">
+                                    <select class="form-control input-sm" name="active" onchange="changeActivity('<?= $user['username'] ?>', this)">
                                         <?php if ($user['active'] == '1') : ?>
                                         <option value="1" selected>Aktivní</option>
                                         <option value="0">Zablokovaný</option>
@@ -246,7 +246,7 @@
                                     </select>
                                 </form>
                             </td>
-                            <td><span><a class="remove" href="index.php?admin=deleteuser&id=<?= $user['id'] ?>"><span class="glyphicon glyphicon-trash"></span></a></span></td>
+                            <td><span><button class="btn btn-link remove" value="index.php?admin=deleteuser&id=<?= $user['id'] ?>" onclick="deleteUser('<?= $user['username'] ?>', this)"><span class="glyphicon glyphicon-trash"></span></button></span></td>
                         </tr>
                         <?php endif ?>
                         <?php endforeach ?>
@@ -278,7 +278,7 @@
 <script>
     function submitReview(form) {
     $.confirm({
-        title: 'Přidělit článek!',
+        title: 'Přidělit článek k recenzi?',
         content: 'Skutečně chcete přidělit článek k recenzi?',
         theme: 'dark',
         escapeKey: true,
@@ -327,58 +327,7 @@
         }
 
         $.confirm({
-            title: 'Změnit stav článku!',
-            content: 'Opravdu chcete změnit stav článku na <b>' +  statusText + '</b>?',
-            theme: 'dark',
-            escapeKey: true,
-            backgroundDismiss: false,
-            buttons: {
-                confirm: {
-                    text : "Ano",
-                    action: function () {
-                        form.submit();
-                    }},
-                cancel: {
-                    text : "Ne",
-                    action: function () {
-                        $('#selApproved').val('0')
-                    }},
-                somethingElse: {
-                    text: 'Nápověda',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        $.alert({
-                            title: 'Nápověda',
-                            content: 'Při kliknutí na tlačítko <b>ano</b>, bude změněn statut článku na požadovaný typ.',
-                            theme: 'dark',
-                        });
-                        return false;
-                    }
-                }
-            }
-        });
-    }
-</script>
-
-<!-- Delete user -->
-<script>
-    function deleteUser(form, value) {
-
-        var status = parseInt(value);
-        var statusText = '';
-
-        if (status === 1)
-        {
-            statusText = 'schváleno';
-        }
-        else if (status === 2)
-        {
-            statusText = 'neschváleno';
-        }
-
-        $.confirm({
-            title: 'Změnit stav článku!',
+            title: 'Změnit stav článku?',
             content: 'Opravdu chcete změnit stav článku na <b>' +  statusText + '</b>?',
             theme: 'dark',
             escapeKey: true,
@@ -438,3 +387,6 @@
         }, 1000);
     });
 </script>
+
+<script src="../model/script/adminValidation.js" type="text/javascript"></script>
+

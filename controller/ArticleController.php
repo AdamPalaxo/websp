@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * Class ArticleController views and/or edits existing articles.
+ */
 class ArticleController extends BaseController
 {
-
+    /**
+     * Views and/or edits existing articles.
+     *
+     * @param $parameters
+     * @return mixed|void
+     */
     function process($parameters)
     {
         $this->checkUser();

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class ArticleManager provides methods for managing articles.
+ */
 class ArticleManager
 {
     /** Adds new article.
@@ -39,7 +42,7 @@ class ArticleManager
     public function getAllArticles()
     {
         return Db::queryAll('
-                        SELECT `article`.`id`, `article`.`title`, `article`.`description`, `article`.`approved`, `article`.`file`, `user`.`name` AS `author`
+                        SELECT `article`.`id`, `article`.`title`, `article`.`description`, `article`.`approved`, `article`.`file`, `article`.`creators`, `user`.`name` AS `author`
                         FROM `article`
                         INNER JOIN `user` ON `user`.`id` = `article`.`author`');
     }

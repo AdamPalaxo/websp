@@ -1,9 +1,10 @@
 <?php
 
-
+/**
+ * Class FileManager provides methods for managing files.
+ */
 class FileManager
 {
-
     /**
      * Adds new file into the database.
      *
