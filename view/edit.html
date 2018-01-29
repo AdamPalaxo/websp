@@ -16,8 +16,8 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading secondary-color-bg">
+            <div class="panel panel-success">
+                <div class="panel-heading">
                     <h3 class="panel-title">Editace posudku</h3>
                 </div>
 
@@ -25,7 +25,7 @@
         <form method="POST">
             <input type="hidden" name="id" value="<?= $review['id'] ?>" />
 
-            <div class="form-group">
+            <div class="form-group required">
                 <label for="selOriginality">Originalita:</label>
                 <select class="form-control" name="rating_originality" id="selOriginality">
                     <option value="1" <?php if ($review['rating_originality'] == '1') echo 'selected'; ?>>1 = bez originálních myšlenek</option>
@@ -36,7 +36,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <label for="selTopic">Téma:</label>
                 <select class="form-control"name="rating_theme" id="selTopic">
                     <option value="1" <?php if ($review['rating_theme'] == '1') echo 'selected'; ?>>1 = zcela jiné téma</option>
@@ -58,7 +58,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <label for="selLanguage">Jazyková kvalita:</label>
                 <select class="form-control" name="rating_awesomeness" id="selLanguage">
                     <option value="1" <?php if ($review['rating_awesomeness'] == '1') echo 'selected'; ?>>1 = mizerná</option>
@@ -69,7 +69,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 <label for="selRecommend">Doporučení:</label>
                 <select class="form-control" name="rating_style" id="selRecommend">
                     <option value="1" <?php if ($review['rating_style'] == '1') echo 'selected'; ?>>1 = nepřijmout</option>

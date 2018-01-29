@@ -20,3 +20,8 @@
 p {
     text-align: justify;
 }
+
+.form-group.required .control-label:after {
+    color: red;
+    content: "*";
+}
