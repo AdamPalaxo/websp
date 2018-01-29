@@ -23,7 +23,7 @@
                 <tbody>
                 <?php foreach ($articles as $article) : ?>
                 <tr>
-                    <td class="col-md-4"><a href="index.php?article=edit&id=<?= $article['id'] ?>" class="btn btn-info"><?= $article['title'] ?></a></td>
+                    <td class="col-md-4"><a href="index.php?article=edit&id=<?= $article['id'] ?>" class="btn btn-link"><?= $article['title'] ?></a></td>
                     <td class="col-md-4"><?= $article['creators'] ?></td>
                     <td class="col-md-4">
                         <?php if ($article['approved'] == '0') : ?>

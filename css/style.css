@@ -25,3 +25,10 @@ p {
     color: red;
     content: "*";
 }
+
+
+a.disabled {
+    color: black;
+    font-weight: bold;
+    pointer-events: none;
+}

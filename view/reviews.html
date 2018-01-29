@@ -27,7 +27,7 @@
                         <td><?= $review['rating'] ?></td>
                         <td>V recenzním řízení</td>
                    <?php else : ?>
-                   <td><button class="btn btn-link" disabled><?= $review['title'] ?></button></td>
+                   <td><a class="btn btn-link disabled"><?= $review['title'] ?></a></td>
                         <td><?= $review['rating'] ?></td>
                        <?php if ($review['approved'] == '1') : ?>
                             <td><b>Schváleno</b></td>
