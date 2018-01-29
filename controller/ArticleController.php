@@ -21,7 +21,6 @@ class ArticleController extends BaseController
 
         // Viewing article with given ID
         if ($_GET['article'] == 'edit' && isset($_GET['id']))
-
         {
             $article = $articleManager->getArticleByID($_GET['id']);
 

@@ -43,19 +43,36 @@ class PaperController extends BaseController
         }
 
         // Deleting article
-        if($_GET['paper'] == 'delete')
+        if($_GET['paper'] == 'delete' && isset($_GET['id']))
         {
-            try
+            $article = $articleManager->getArticleByID($_GET['id']);
+
+            if (!$article)
             {
-                $id = $_GET['id'];
-                $articleManager->deleteArticle($id);
-                $this->addMessage("Článek úspěšně smazán.", "success");
+                $this->addMessage("Zvolený příspěvek neexistuje.", "success");
                 $this->redirect("index.php?paper");
             }
-            catch (ArticleException $ex)
+
+            if ($_SESSION['user']['id'] == $article['author'])
             {
-                $this->addMessage($ex->getMessage(), "error");
+                try
+                {
+                    $id = $_GET['id'];
+                    $articleManager->deleteArticle($id);
+                    $this->addMessage("Článek úspěšně smazán.", "success");
+                    $this->redirect("index.php?paper");
+                }
+                catch (ArticleException $ex)
+                {
+                    $this->addMessage($ex->getMessage(), "error");
+                }
             }
+            else
+            {
+                $this->addMessage("Nemáte dostatečná oprávnění ke smazání článku!", "warning");
+                $this->redirect("index.php?paper");
+            }
+
         }
 
         $this->data['articles'] = $articleManager->getArticleByAuthor($_SESSION['user']['id']);
