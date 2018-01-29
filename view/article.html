@@ -10,9 +10,9 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading secondary-color-bg">
-                    <h3 class="panel-title">Editace posudku</h3>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Editace příspěvku</h3>
                 </div>
 
                 <div class="panel-body">
@@ -21,25 +21,25 @@
                     <input type="hidden" name="id" value="<?= $article['id'] ?>" />
 
 
-                    <div class="form-group">
-                        <label for="title">Název příspěvku: </label>
+                    <div class="form-group required">
+                        <label for="title" class="control-label">Název příspěvku: </label>
                         <input type="text" class="form-control" name="title" id="title" placeholder="Název příspěvku" value="<?= $article['title'] ?>" required/>
                     </div>
 
-                    <div class="form-group">
-                        <label for="creators">Autoři: </label>
+                    <div class="form-group required">
+                        <label for="creators" class="control-label">Autoři: </label>
                         <input type="text" class="form-control" name="creators" id="creators" placeholder="Autoři" value="<?= $article['creators'] ?>" required>
                     </div>
 
 
-                    <div class="form-group">
-                        <label for="file">Soubor: </label>
+                    <div class="form-group required">
+                        <label for="file" class="control-label">Soubor: </label>
                         <input type="file" class="filestyle" data-icon="false" name="file" id="file" accept="application/pdf"  <?php if ($article['file'] == '0') echo 'required'; ?>>
                         <input type="hidden" name="MAX_FILE_SIZE" value="10000" />
                     </div>
 
-                    <div class="form-group">
-                        <label for="description">Abstrakt: </label>
+                    <div class="form-group required">
+                        <label for="description" class="control-label">Abstrakt: </label>
                         <textarea class="form-control" rows="10" name="description" id="description" required><?= $article['description'] ?></textarea>
                     </div>
                     <div class="form-group">
