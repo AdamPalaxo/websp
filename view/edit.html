@@ -26,7 +26,7 @@
             <input type="hidden" name="id" value="<?= $review['id'] ?>" />
 
             <div class="form-group required">
-                <label for="selOriginality">Originalita:</label>
+                <label for="selOriginality" class="control-label">Originalita: </label>
                 <select class="form-control" name="rating_originality" id="selOriginality">
                     <option value="1" <?php if ($review['rating_originality'] == '1') echo 'selected'; ?>>1 = bez originálních myšlenek</option>
                     <option value="2" <?php if ($review['rating_originality'] == '2') echo 'selected'; ?>>2 = velmi málo originálních myšlenek</option>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group required">
-                <label for="selTopic">Téma:</label>
+                <label for="selTopic" class="control-label">Téma: </label>
                 <select class="form-control"name="rating_theme" id="selTopic">
                     <option value="1" <?php if ($review['rating_theme'] == '1') echo 'selected'; ?>>1 = zcela jiné téma</option>
                     <option value="2" <?php if ($review['rating_theme'] == '2') echo 'selected'; ?>>2 = nedodržení tématu</option>
@@ -47,8 +47,8 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="selTechQuality">Technické zpracování:</label>
+            <div class="form-group required">
+                <label for="selTechQuality" class="control-label">Technické zpracování: </label>
                 <select class="form-control" name="rating_language" id="selTechQuality">
                     <option value="1" <?php if ($review['rating_language'] == '1') echo 'selected'; ?>>1 = mizerné</option>
                     <option value="2" <?php if ($review['rating_language'] == '2') echo 'selected'; ?>>2 = podprůměrné</option>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group required">
-                <label for="selLanguage">Jazyková kvalita:</label>
+                <label for="selLanguage" class="control-label">Jazyková kvalita: </label>
                 <select class="form-control" name="rating_awesomeness" id="selLanguage">
                     <option value="1" <?php if ($review['rating_awesomeness'] == '1') echo 'selected'; ?>>1 = mizerná</option>
                     <option value="2" <?php if ($review['rating_awesomeness'] == '2') echo 'selected'; ?>>2 = podprůměrná</option>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="form-group required">
-                <label for="selRecommend">Doporučení:</label>
+                <label for="selRecommend" class="control-label">Doporučení: </label>
                 <select class="form-control" name="rating_style" id="selRecommend">
                     <option value="1" <?php if ($review['rating_style'] == '1') echo 'selected'; ?>>1 = nepřijmout</option>
                     <option value="2" <?php if ($review['rating_style'] == '2') echo 'selected'; ?>>2 = spíše nepřijmout</option>
