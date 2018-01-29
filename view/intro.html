@@ -22,7 +22,7 @@
         <?php if ($article['approved'] == '1') : ?>
         <form method="POST" action="index.php?pdf=<?= $article['title'] ?>.pdf" style="margin: 0;"  >
             <input type="hidden" name="id" value="<?= $article['id'] ?>">
-            <button class="list-group-item" onclick="this.form.submit()">
+            <button class="list-group-item" data-toggle="tooltip" data-placement="auto" onclick="this.form.submit()">
                 <h4 class="list-group-item-heading"><?= $article['title'] ?> - <?= $article['author'] ?></h4>
                 <p class="list-group-item-text" id="description"><?php echo html_entity_decode($article['description']); ?></p>
             </button>
@@ -32,4 +32,9 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({title: "Po kliknutí bude zobrazen PDF soubor článku!", animation: true, delay: {show: 1000, hide: 100}});
+    });
+</script>
   
